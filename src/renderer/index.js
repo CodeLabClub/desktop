@@ -1,6 +1,12 @@
 import './normalize.css';
 import './prompt-impl';
 
+window.__static = window.preload.init()
+
+if (!window.globalThis) {
+  window.globalThis = window;
+}
+
 const searchParams = new URLSearchParams(location.search);
 const route = searchParams.get('route');
 
