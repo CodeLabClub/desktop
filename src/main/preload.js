@@ -16,3 +16,16 @@ contextBridge.exposeInMainWorld('electron', {
     }
   }
 });
+
+contextBridge.exposeInMainWorld(
+  'preload',
+  {
+    init: () => {
+      if (process.env.NODE_ENV !== 'development') {
+        return require('path').join(__dirname, '/static').replace(/\\/g, '\\\\');
+      } else {
+        return '/static';
+      }
+    }
+  }
+)

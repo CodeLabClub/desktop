@@ -34,6 +34,10 @@ extensionNames.set('sprite3', 'Scratch 3 Sprite');
 extensionNames.set('txt', 'Text Document');
 extensionNames.set('webm', 'WebM Video');
 
+app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
+
+const isSafeOpenExternal = () => true
+/*
 const isSafeOpenExternal = (url) => {
   try {
     const parsedUrl = new URL(url);
@@ -51,6 +55,7 @@ const isSafeOpenExternal = (url) => {
   }
   return false;
 };
+*/
 
 if (isMac) {
   Menu.setApplicationMenu(Menu.buildFromTemplate([
@@ -554,7 +559,7 @@ if (acquiredLock) {
   });
 
   app.on('ready', () => {
-    checkForUpdate();
+    // checkForUpdate();
     autoCreateEditorWindows();
   });
 } else {

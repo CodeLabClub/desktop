@@ -1,9 +1,7 @@
 name: Release
 
 on:
-  push:
-    tags:
-    - 'v*'
+  workflow_dispatch:
 
 jobs:
   release:
@@ -15,19 +13,46 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
+    - name: Set Personal Access Token
+      run: git config --global url."https://${{ secrets.USER_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
+
     - name: Install Dependencies
-      run: npm ci
+      run: npm install
     - name: Download Library Files
       run: npm run fetch
+
+    - name: Checkout e-ducation/scratch-vm
+      uses: actions/checkout@v2
+      with:
+        repository: e-ducation/scratch-vm
+        token: ${{ secrets.USER_TOKEN }}
+        ref: dev
+        path: scratch-vm
+
+    - name: Checkout e-ducation/scratch-gui
+      uses: actions/checkout@v2
+      with:
+        repository: e-ducation/scratch-gui
+        token: ${{ secrets.USER_TOKEN }}
+        ref: dev
+        path: scratch-gui
+
+    - name: resolve extension files
+      run: |
+        cp -r ./scratch-vm/src/extensions ./node_modules/scratch-vm/src
+        cp -r ./scratch-gui/src/lib/libraries/extensions ./node_modules/scratch-gui/src/lib/libraries
+
     - name: Compile
       run: npm run compile
       env:
-        NODE_OPTIONS: --max-old-space-size=4096
+        NODE_OPTIONS: --max-old-space-size=10000
     - name: Package and Publish
       run: npx --no-install electron-builder --publish always
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.USER_TOKEN }}

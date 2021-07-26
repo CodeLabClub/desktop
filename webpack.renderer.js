@@ -17,9 +17,17 @@ module.exports = defaultConfig => {
                 {
                     test: /\.jsx?$/,
                     loader: 'babel-loader',
+                    include: [
+                        path.resolve(__dirname, 'src', 'renderer'),
+                        /node_modules[\\/]scratch-[^\\/]+[\\/]src/
+                    ],
                     options: {
                         presets: ['@babel/preset-env', '@babel/preset-react'],
-                        plugins: ['@babel/plugin-proposal-optional-chaining']
+                        plugins: [
+                            '@babel/plugin-proposal-optional-chaining',
+                            '@babel/plugin-transform-modules-commonjs',
+                            '@babel/plugin-proposal-object-rest-spread'
+                        ]
                     }
                 },
                 {
@@ -32,6 +40,7 @@ module.exports = defaultConfig => {
                 },
                 {
                     test: /\.css$/,
+                    exclude: /\.min\.css$/,
                     use: [
                         {
                             loader: 'style-loader'
@@ -57,7 +66,11 @@ module.exports = defaultConfig => {
                                 }
                             }
                         }
-                    ]
+                    ],
+                },
+                {
+                    test: /\.min\.css$/,
+                    use: ['style-loader', 'css-loader']
                 }
             ],
         },
@@ -70,8 +83,12 @@ module.exports = defaultConfig => {
                 {
                     from: libraryFilesFolder,
                     to: 'library-files'
-                }
+                },
                 // TODO: copy extension worker?
+                {
+                    from: path.resolve(__dirname, 'node_modules', 'scratch-gui', 'static'),
+                    to: 'static'
+                }
             ])
         ],
         resolve: {

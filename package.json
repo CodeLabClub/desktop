@@ -1,7 +1,7 @@
 {
-  "name": "turbowarp-desktop",
+  "name": "codelab-turbowarp-desktop",
   "description": "Desktop app for TurboWarp",
-  "version": "0.5.0",
+  "version": "0.1.1",
   "license": "GPL-3.0",
   "author": {
     "email": "contact@turbowarp.org",
@@ -21,6 +21,8 @@
   "devDependencies": {
     "@babel/preset-env": "^7.12.16",
     "@babel/preset-react": "^7.13.13",
+    "@babel/plugin-transform-modules-commonjs": "7.14.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "css-loader": "^5.0.2",
     "electron": "^12.0.7",
     "electron-builder": "22.10.5",
@@ -30,7 +32,7 @@
     "postcss-import": "^14.0.0",
     "postcss-loader": "^4.2.0",
     "postcss-simple-vars": "^6.0.3",
-    "scratch-gui": "github:TurboWarp/scratch-gui#desktop",
+    "scratch-gui": "github:CodeLabClub/scratch-gui-turbowarp#desktop",
     "semver": "^7.3.4",
     "webpack": "~4.46.0",
     "write-file-atomic": "^3.0.3"
@@ -45,8 +47,8 @@
     "email": "contact@turbowarp.org"
   },
   "build": {
-    "appId": "org.turbowarp.desktop",
-    "productName": "TurboWarp",
+    "appId": "org.codelab.turbowarp.desktop",
+    "productName": "CodeLab TurboWarp",
     "win": {
       "artifactName": "${productName} Setup ${version}.${ext}",
       "icon": "build/icon.ico",
@@ -154,7 +156,7 @@
       {
         "provider": "github",
         "repo": "desktop",
-        "owner": "TurboWarp"
+        "owner": "CodeLabClub"
       }
     ]
   },

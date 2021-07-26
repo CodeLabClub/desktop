@@ -2,7 +2,6 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-eval' 'unsafe-inline' 'self' blob:; style-src 'unsafe-inline' 'self'; img-src 'self' data:; media-src 'self'; font-src data:; connect-src 'self' data: https://synthesis-service.scratch.mit.edu https://translate-service.scratch.mit.edu/ wss://device-manager.scratch.mit.edu:20110">
     <!-- electron-webpack always inserts some weird scripts, stub require() to avoid errors -->
     <script>
       window.require = (m) => {
@@ -10,6 +9,18 @@
         if (m === 'source-map-support/source-map-support.js') return {install(){}};
         throw new Error("That's something I can not allow.");
       };
+    </script>
+    <script id="syncload">
+      function loadScriptAsync(url) {
+          var head = document.getElementsByTagName("head")[0];
+          var s = document.createElement("script");
+          s.src = url;
+          let referenceNode = document.querySelector('script#syncload')
+          referenceNode.parentNode.insertBefore(s, referenceNode.nextSibling);
+      }
+      loadScriptAsync('./static/jquery/jquery.min.js')
+      loadScriptAsync('./static/toio/toio.js')
+      loadScriptAsync('./static/speech//microsoft.cognitiveservices.speech.sdk.bundle.js')
     </script>
     <style>
       #splash {
