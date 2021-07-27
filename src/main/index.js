@@ -18,7 +18,7 @@ const isWindows = process.platform === 'win32';
 const isLinux = process.platform === 'linux';
 
 const editorWindows = new Set();
-const editorWindowTitle = `TurboWarp Desktop ${version}`;
+const editorWindowTitle = `CodeLab TurboWarp Desktop ${version}`;
 const filesToOpen = [];
 let aboutWindow = null;
 let settingsWindow = null;
